@@ -1,0 +1,224 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>What's the Weather like today?</title>
+  <link rel = "stylesheet" href="{% static 'weather/style.css' %}">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+     <style>
+      body {
+        background-color: #C1CFEA;
+      }
+      form {
+        width: 70%;
+        margin: auto;
+        margin-top: 5%;
+      }
+      input {
+        padding: 4px 10px;
+        border: 0;
+        font-size: 16px;
+      }
+      .input {
+        width: 75%;
+      }
+      .button is-info {
+        width: 10%;
+        background-color: #1c87c9;
+        color: #ffffff;
+        border:none;
+      }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light py-3" >
+  <div class="container" >
+    <a class="navbar-brand" style="font-size:40px;" href="#">What's the weather like today?</a>
+  </div>
+<!--    <form class="form-inline">-->
+<!--    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+<!--    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+<!--  </form>-->
+</nav>
+
+<!--<nav class="navbar navbar-light bg-light justify-content-between">-->
+<!--  <a class="navbar-brand" style="padding-left: 1.5%;">  What's the weather today?</a>-->
+<!--</nav>-->
+<!--<form method="post">-->
+<!--  <div class="field-has-addones">-->
+<!--    <div class ="control is-expanded">-->
+<!--      <input class="input" type="text" placeholder="City Name">-->
+<!--    </div>-->
+<!--    <div class="control">-->
+<!--      <button type="submit" class="button is-info"> Add city</button>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</form>-->
+
+
+<section class="vh-100" style="background-color: #C1CFEA;">
+    <form method="post" style="padding-left:33%">
+        {% csrf_token %}
+        {{ form.name }}
+        <button type="submit" class="button is-info">Add City</button>
+    </form>
+
+  <div class="container py-5 h-100">
+
+
+    <div class="row d-flex justify-content-center align-items-center h-100" style="color: #282828;">
+      <div class="col-md-9 col-lg-7 col-xl-5">
+
+
+        <br>
+          {% for city_weather in weather_data %}
+        <div class="card mb-4 gradient-custom" style="border-radius: 25px;">
+          <div class="card-body p-4">
+
+            <div id="demo1" class="carousel slide" data-ride="carousel">
+              <!-- Indicators -->
+              <ul class="carousel-indicators mb-0">
+                <li data-target="#demo1" data-slide-to="0" class="active"></li>
+                <li data-target="#demo1" data-slide-to="1"></li>
+                <li data-target="#demo1" data-slide-to="2"></li>
+              </ul>
+              <!-- Carousel inner -->
+
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <div class="d-flex justify-content-between mb-4 pb-2">
+                    <div>
+                      <h2 class="display-2"><strong>{{city_weather.temperature}}</strong></h2>
+                      <p class="text-muted mb-0">{{city_weather.city}}</p>
+                      <p class="text-muted mb-0" style="font-size:24px;" ><strong> {{city_weather.description}} </strong> </p>
+                    </div>
+                    <div>
+                      <img src="https://openweathermap.org/img/w/{{city_weather.icon}}.png"
+                        width="100px">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+           {% endfor %}
+
+<!--        <div class="card mb-4" style="border-radius: 25px;">-->
+<!--          <div class="card-body p-4">-->
+
+<!--            <div id="demo2" class="carousel slide" data-ride="carousel">-->
+<!--              &lt;!&ndash; Indicators &ndash;&gt;-->
+<!--              <ul class="carousel-indicators mb-0">-->
+<!--                <li data-target="#demo2" data-slide-to="0"></li>-->
+<!--                <li data-target="#demo2" data-slide-to="1" class="active"></li>-->
+<!--                <li data-target="#demo2" data-slide-to="2"></li>-->
+<!--              </ul>-->
+<!--              &lt;!&ndash; Carousel inner &ndash;&gt;-->
+<!--              <div class="carousel-inner">-->
+<!--                <div class="carousel-item active">-->
+<!--                  <div class="d-flex justify-content-around text-center mb-4 pb-3 pt-2">-->
+<!--                    <div class="flex-column">-->
+<!--                      <p class="small"><strong>21°C</strong></p>-->
+<!--                      <i class="fas fa-sun fa-2x mb-3" style="color: #ddd;"></i>-->
+<!--                      <p class="mb-0"><strong>12:00</strong></p>-->
+<!--                      <p class="mb-0 text-muted" style="font-size: .65rem;">PM</p>-->
+<!--                    </div>-->
+<!--                    <div class="flex-column">-->
+<!--                      <p class="small"><strong>2°C</strong></p>-->
+<!--                      <i class="fas fa-sun fa-2x mb-3" style="color: #ddd;"></i>-->
+<!--                      <p class="mb-0"><strong>1:00</strong></p>-->
+<!--                      <p class="mb-0 text-muted" style="font-size: .65rem;">PM</p>-->
+<!--                    </div>-->
+<!--                    <div class="flex-column">-->
+<!--                      <p class="small"><strong>20°C</strong></p>-->
+<!--                      <i class="fas fa-cloud fa-2x mb-3" style="color: #ddd;"></i>-->
+<!--                      <p class="mb-0"><strong>2:00</strong></p>-->
+<!--                      <p class="mb-0 text-muted" style="font-size: .65rem;">PM</p>-->
+<!--                    </div>-->
+<!--                    <div class="flex-column">-->
+<!--                      <p class="small"><strong>19°C</strong></p>-->
+<!--                      <i class="fas fa-cloud fa-2x mb-3" style="color: #ddd;"></i>-->
+<!--                      <p class="mb-0"><strong>3:00</strong></p>-->
+<!--                      <p class="mb-0 text-muted" style="font-size: .65rem;">PM</p>-->
+<!--                    </div>-->
+<!--                    <div class="flex-column">-->
+<!--                      <p class="small"><strong>18°C</strong></p>-->
+<!--                      <i class="fas fa-cloud-showers-heavy fa-2x mb-3" style="color: #ddd;"></i>-->
+<!--                      <p class="mb-0"><strong>4:00</strong></p>-->
+<!--                      <p class="mb-0 text-muted" style="font-size: .65rem;">PM</p>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="card" style="border-radius: 25px;">-->
+<!--          <div class="card-body p-4">-->
+
+<!--            <div id="demo3" class="carousel slide" data-ride="carousel">-->
+<!--              &lt;!&ndash; Indicators &ndash;&gt;-->
+<!--              <ul class="carousel-indicators mb-0">-->
+<!--                <li data-target="#demo3" data-slide-to="0"></li>-->
+<!--                <li data-target="#demo3" data-slide-to="1"></li>-->
+<!--                <li data-target="#demo3" data-slide-to="2" class="active"></li>-->
+<!--              </ul>-->
+<!--              &lt;!&ndash; Carousel inner &ndash;&gt;-->
+<!--              <div class="carousel-inner">-->
+<!--                <div class="carousel-item active">-->
+<!--                  <div class="d-flex justify-content-around text-center mb-4 pb-3 pt-2">-->
+<!--                    <div class="flex-column">-->
+<!--                      <p class="small"><strong>21°C</strong></p>-->
+<!--                      <i class="fas fa-sun fa-2x mb-3" style="color: #ddd;"></i>-->
+<!--                      <p class="mb-0"><strong>Mon</strong></p>-->
+<!--                    </div>-->
+<!--                    <div class="flex-column">-->
+<!--                      <p class="small"><strong>20°C</strong></p>-->
+<!--                      <i class="fas fa-sun fa-2x mb-3" style="color: #ddd;"></i>-->
+<!--                      <p class="mb-0"><strong>Tue</strong></p>-->
+<!--                    </div>-->
+<!--                    <div class="flex-column">-->
+<!--                      <p class="small"><strong>16°C</strong></p>-->
+<!--                      <i class="fas fa-cloud fa-2x mb-3" style="color: #ddd;"></i>-->
+<!--                      <p class="mb-0"><strong>Wed</strong></p>-->
+<!--                    </div>-->
+<!--                    <div class="flex-column">-->
+<!--                      <p class="small"><strong>17°C</strong></p>-->
+<!--                      <i class="fas fa-cloud fa-2x mb-3" style="color: #ddd;"></i>-->
+<!--                      <p class="mb-0"><strong>Thu</strong></p>-->
+<!--                    </div>-->
+<!--                    <div class="flex-column">-->
+<!--                      <p class="small"><strong>18°C</strong></p>-->
+<!--                      <i class="fas fa-cloud-showers-heavy fa-2x mb-3" style="color: #ddd;"></i>-->
+<!--                      <p class="mb-0"><strong>Fri</strong></p>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+
+<!--          </div>-->
+<!--        </div>-->
+
+<!--      </div>-->
+<!--    </div>-->
+
+<!--  </div>-->
+</section>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+</body>
+</html>
